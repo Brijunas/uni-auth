@@ -1,0 +1,10 @@
+/node_modules/
+/build/
+/dist/
+/.vscode/
+/*.js
+/*.d.ts
+/*.map
+/tsconfig*.json
+/tsconfig*.json.d.ts
+/coverage/
