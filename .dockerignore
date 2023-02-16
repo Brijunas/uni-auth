@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+coverage
+*.log
+*.swp
+*.tmp
+.DS_Store
+.eslintcache
+.cache
+.vscode
+.nyc_output
