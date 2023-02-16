@@ -10,3 +10,4 @@ coverage
 .cache
 .vscode
 .nyc_output
+.husky

@@ -1,0 +1,10 @@
+node_modules/**
+build/**
+dist/**
+out/**
+tmp/**
+logs/**
+.git/**
+coverage/**
+build/**
+.husky/**
