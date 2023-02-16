@@ -55,7 +55,7 @@
       "prettier --write"
     ],
     "**/*.ts?(x)": [
-      "eslint --cache --fix",
+      "eslint --fix",
       "prettier --write"
     ]
   }
