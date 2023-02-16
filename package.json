@@ -51,10 +51,7 @@
     ]
   },
   "lint-staged": {
-    "**/*.css": [
-      "prettier --write"
-    ],
-    "**/*.ts?(x)": [
+    "**/*.{ts?(x),js?(x),css,json,md}": [
       "eslint --fix",
       "prettier --write"
     ]
