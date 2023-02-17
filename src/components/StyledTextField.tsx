@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { HTMLInputTypeAttribute } from 'react'
 import { TextField } from '@mui/material'
 
 type Props = {
   label: string
+  type: HTMLInputTypeAttribute
 }
 
-const StyledTextField: React.FC<Props> = ({ label }) => {
+const StyledTextField: React.FC<Props> = ({ label, type }) => {
   const labelLowerCase = label.toLocaleLowerCase()
 
   return (
@@ -14,6 +15,7 @@ const StyledTextField: React.FC<Props> = ({ label }) => {
       label={label}
       name={labelLowerCase}
       autoComplete={labelLowerCase}
+      type={type}
       margin='normal'
       autoFocus
       fullWidth

@@ -14,8 +14,8 @@ const Form = () => {
 
   return (
     <Container component='form' maxWidth='xs' onSubmit={handleSubmit} noValidate>
-      <StyledTextField label='Email' />
-      <StyledTextField label='Password' />
+      <StyledTextField label='Email' type='email' />
+      <StyledTextField label='Password' type='password' />
       <Button type='submit' variant='contained' sx={{ mt: 2, mb: 2 }} fullWidth>
         Sign In
       </Button>
