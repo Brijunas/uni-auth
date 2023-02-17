@@ -1,11 +1,21 @@
-import React from 'react'
-import { Button } from '@mui/material'
+import { Provider } from 'react-redux'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
+import { store } from './app/store'
+import Form from './components/Form'
 import StyledGrid from './components/StyledGrid'
 
+const theme = createTheme()
+
 const App: React.FC = () => (
-  <StyledGrid container direction='column' justifyContent='center' alignItems='center'>
-    <Button variant='contained'>Sign In</Button>
-  </StyledGrid>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <StyledGrid container direction='column' justifyContent='center' alignItems='center'>
+        <Form />
+      </StyledGrid>
+    </ThemeProvider>
+  </Provider>
 )
 
 export default App
