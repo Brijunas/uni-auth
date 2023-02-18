@@ -1,51 +1,65 @@
-import React from 'react'
-import { Button, Container } from '@mui/material'
-import StyledTextField from './StyledTextField'
-import { useFormik } from 'formik'
+import React, { useEffect, useRef } from 'react'
+import { Button, Container, TextField } from '@mui/material'
 import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+interface SignInFormData {
+  email: string
+  password: string
+}
 
 const Form: React.FC = () => {
-  const validationSchema = yup.object({
+  const emailRef = useRef<HTMLInputElement>(null)
+
+  const schema = yup.object({
     email: yup.string().email('Enter a valid email').required('Email is required'),
     password: yup
       .string()
-      .min(12, 'Password should be of minimum 12 characters length')
-      .matches(/[a-zA-Z]/, 'Password must contain some letters')
-      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-      .matches(/\d/, 'Password must contain at least one number')
-      .matches(/[@$!%*?&]/, 'Password must contain at least one symbol')
-      .required('Password is required'),
+      .required('Password is required')
+      .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/, 'Enter a valid password'),
   })
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values)
-    },
-  })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormData>({ resolver: yupResolver(schema) })
+
+  const onSubmit: SubmitHandler<SignInFormData> = (data) => {
+    console.log(data)
+  }
+
+  useEffect(() => {
+    if (emailRef.current) {
+      emailRef.current.focus()
+    }
+  }, [])
 
   return (
-    <Container component='form' maxWidth='xs' onSubmit={formik.handleSubmit} noValidate>
-      <StyledTextField
+    <Container component='form' maxWidth='xs' onSubmit={handleSubmit(onSubmit)} noValidate>
+      <TextField
+        id='email'
         label='Email'
         type='email'
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        helperText={formik.touched.email && formik.errors.email}
+        margin='normal'
+        error={!!errors.email}
+        helperText={errors.email?.message}
+        fullWidth
+        required
+        inputRef={emailRef}
+        {...register('email')}
       />
-      <StyledTextField
+      <TextField
+        id='password'
         label='Password'
         type='password'
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
+        margin='normal'
+        error={!!errors.password}
+        helperText={errors.password?.message}
+        fullWidth
+        required
+        {...register('password')}
       />
       <Button type='submit' variant='contained' sx={{ mt: 2, mb: 2 }} fullWidth>
         Sign In
