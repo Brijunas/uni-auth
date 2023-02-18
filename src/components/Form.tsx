@@ -24,7 +24,7 @@ const Form: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>({ resolver: yupResolver(schema) })
+  } = useForm<SignInFormData>({ resolver: yupResolver(schema), mode: 'onBlur' })
 
   const onSubmit: SubmitHandler<SignInFormData> = (data) => {
     console.log(data)
