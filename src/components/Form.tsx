@@ -2,13 +2,28 @@ import React from 'react'
 import { Button, Container } from '@mui/material'
 import StyledTextField from './StyledTextField'
 import { useFormik } from 'formik'
+import * as yup from 'yup'
 
 const Form: React.FC = () => {
+  const validationSchema = yup.object({
+    email: yup.string().email('Enter a valid email').required('Email is required'),
+    password: yup
+      .string()
+      .min(12, 'Password should be of minimum 12 characters length')
+      .matches(/[a-zA-Z]/, 'Password must contain some letters')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/\d/, 'Password must contain at least one number')
+      .matches(/[@$!%*?&]/, 'Password must contain at least one symbol')
+      .required('Password is required'),
+  })
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+    validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values)
     },
