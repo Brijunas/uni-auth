@@ -43,6 +43,7 @@ const Form: React.FC = () => {
         label='Email'
         type='email'
         margin='normal'
+        autoComplete='username'
         error={!!errors.email}
         helperText={errors.email?.message}
         fullWidth
@@ -55,6 +56,7 @@ const Form: React.FC = () => {
         label='Password'
         type='password'
         margin='normal'
+        autoComplete='current-password'
         error={!!errors.password}
         helperText={errors.password?.message}
         fullWidth
