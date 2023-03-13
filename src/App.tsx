@@ -1,21 +1,16 @@
-import { Provider } from 'react-redux'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { CssBaseline } from '@mui/material'
-import { store } from './app/store'
-import Form from './components/Form'
-import StyledGrid from './components/StyledGrid'
-
-const theme = createTheme()
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import URL, { Layout, Login, NotFound, SignUp } from './pages'
 
 const App: React.FC = () => (
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <StyledGrid container direction='column' justifyContent='center' alignItems='center'>
-        <Form />
-      </StyledGrid>
-    </ThemeProvider>
-  </Provider>
+  <BrowserRouter>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index path={URL.LOGIN} element={<Login />} />
+        <Route path={URL.SIGN_UP} element={<SignUp />} />
+        <Route path={URL.CATCH_ALL} element={<NotFound />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
 )
 
 export default App

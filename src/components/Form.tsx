@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Container, Divider, TextField } from '@mui/material'
 import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import URL from '../pages'
 import StyledButton from './StyledButton'
 
 interface SignInFormData {
@@ -65,7 +67,7 @@ const Form: React.FC = () => {
       <Divider variant='fullWidth' sx={{ mt: 2, mb: 2 }}>
         Or
       </Divider>
-      <StyledButton type='submit' variant='outlined' fullWidth>
+      <StyledButton component={Link} to={URL.SIGN_UP} variant='outlined' fullWidth>
         Sign Up
       </StyledButton>
     </Container>
