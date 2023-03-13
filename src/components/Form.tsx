@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
-import { Button, Container, TextField } from '@mui/material'
+import { Container, Divider, TextField } from '@mui/material'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import StyledButton from './StyledButton'
 
 interface SignInFormData {
   email: string
@@ -13,11 +14,8 @@ const Form: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null)
 
   const schema = yup.object({
-    email: yup.string().email('Enter a valid email').required('Email is required'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/, 'Enter a valid password'),
+    email: yup.string().email('Enter a valid email'),
+    password: yup.string(),
   })
 
   const {
@@ -47,7 +45,6 @@ const Form: React.FC = () => {
         error={!!errors.email}
         helperText={errors.email?.message}
         fullWidth
-        required
         inputRef={emailRef}
         {...register('email')}
       />
@@ -60,12 +57,17 @@ const Form: React.FC = () => {
         error={!!errors.password}
         helperText={errors.password?.message}
         fullWidth
-        required
         {...register('password')}
       />
-      <Button type='submit' variant='contained' sx={{ mt: 2, mb: 2 }} fullWidth>
-        Sign In
-      </Button>
+      <StyledButton type='submit' variant='contained' fullWidth>
+        Log In
+      </StyledButton>
+      <Divider variant='fullWidth' sx={{ mt: 2, mb: 2 }}>
+        Or
+      </Divider>
+      <StyledButton type='submit' variant='outlined' fullWidth>
+        Sign Up
+      </StyledButton>
     </Container>
   )
 }
