@@ -34,7 +34,7 @@ const SignUpForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<SignUpFormData>({ resolver: yupResolver(schema), mode: 'onBlur' })
 
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
@@ -48,7 +48,7 @@ const SignUpForm: React.FC = () => {
   }, [])
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up'>
+    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
       <TextField
         id='email'
         label='Email'
