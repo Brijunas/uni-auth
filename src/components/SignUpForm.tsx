@@ -89,7 +89,7 @@ const SignUpForm: React.FC = () => {
         label='Password'
         type='password'
         margin='normal'
-        autoComplete='current-password'
+        autoComplete='new-password'
         error={!!errors.password}
         helperText={errors.password?.message}
         fullWidth
@@ -101,7 +101,7 @@ const SignUpForm: React.FC = () => {
         label='Repeat password'
         type='password'
         margin='normal'
-        autoComplete='current-password'
+        autoComplete='confirm-password'
         error={!!errors.repeatPassword}
         helperText={errors.repeatPassword?.message}
         fullWidth
