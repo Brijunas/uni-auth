@@ -5,29 +5,39 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Form from '../shared/Form'
 
-interface LogInFormData {
+interface SignUpFormData {
   email: string
   password: string
+  repeatPassword: string
 }
 
-const LoginForm: React.FC = () => {
+const SignUpForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null)
 
   const schema = yup.object({
-    email: yup.string().required('Email is required').email('Enter a valid email'),
+    email: yup.string().email('Enter a valid email').required('Email is required'),
     password: yup
       .string()
       .required('Password is required')
-      .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,50}$/, 'Enter a valid password'),
+      .min(12, 'Password must be at least 12 characters')
+      .max(50, 'Password must be at most 50 characters')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]*$/,
+        'Password must contain at least one lowercase letter, one uppercase letter, one digit and one special character'
+      ),
+    repeatPassword: yup
+      .string()
+      .required('Repeat password is required')
+      .oneOf([yup.ref('password')], 'Password mismatches'),
   })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LogInFormData>({ resolver: yupResolver(schema), mode: 'onSubmit' })
+  } = useForm<SignUpFormData>({ resolver: yupResolver(schema), mode: 'onBlur' })
 
-  const onSubmit: SubmitHandler<LogInFormData> = (data) => {
+  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
     console.log(data)
   }
 
@@ -38,7 +48,7 @@ const LoginForm: React.FC = () => {
   }, [])
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Log in'>
+    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up'>
       <TextField
         id='email'
         label='Email'
@@ -62,8 +72,19 @@ const LoginForm: React.FC = () => {
         fullWidth
         {...register('password')}
       />
+      <TextField
+        id='repeatPassword'
+        label='Repeat password'
+        type='password'
+        margin='normal'
+        autoComplete='current-password'
+        error={!!errors.repeatPassword}
+        helperText={errors.repeatPassword?.message}
+        fullWidth
+        {...register('repeatPassword')}
+      />
     </Form>
   )
 }
 
-export default LoginForm
+export default SignUpForm
