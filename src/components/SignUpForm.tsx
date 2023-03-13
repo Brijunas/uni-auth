@@ -15,7 +15,7 @@ const SignUpForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null)
 
   const schema = yup.object({
-    email: yup.string().email('Enter a valid email').required('Email is required'),
+    email: yup.string().required('Email is required').email('Enter a valid email'),
     password: yup
       .string()
       .required('Password is required')
