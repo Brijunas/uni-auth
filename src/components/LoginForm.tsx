@@ -1,18 +1,16 @@
-import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Container, Divider, TextField } from '@mui/material'
 import * as yup from 'yup'
-import URL from '../pages'
-import StyledButton from './StyledButton'
+import Form from '../shared/Form'
 
 interface SignInFormData {
   email: string
   password: string
 }
 
-const Form: React.FC = () => {
+const LoginForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null)
 
   const schema = yup.object({
@@ -37,7 +35,7 @@ const Form: React.FC = () => {
   }, [])
 
   return (
-    <Container component='form' maxWidth='xs' onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Log in'>
       <TextField
         id='email'
         label='Email'
@@ -61,17 +59,8 @@ const Form: React.FC = () => {
         fullWidth
         {...register('password')}
       />
-      <StyledButton type='submit' variant='contained' fullWidth>
-        Log In
-      </StyledButton>
-      <Divider variant='fullWidth' sx={{ mt: 2, mb: 2 }}>
-        Or
-      </Divider>
-      <StyledButton component={Link} to={URL.SIGN_UP} variant='outlined' fullWidth>
-        Sign Up
-      </StyledButton>
-    </Container>
+    </Form>
   )
 }
 
-export default Form
+export default LoginForm
