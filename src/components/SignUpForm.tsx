@@ -12,9 +12,8 @@ const regexForAtLeastOneSpecialCharacter = /^(?=.*[!@#$%^&*()_+\-={}|[\]\\:";'<>
 
 interface SignUpFormData {
   email: string
-  repeatEmail: string
   password: string
-  repeatPassword: string
+  confirmPassword: string
 }
 
 const SignUpForm: React.FC = () => {
@@ -22,10 +21,6 @@ const SignUpForm: React.FC = () => {
 
   const schema = yup.object({
     email: yup.string().required('Email is required').email('Enter a valid email'),
-    repeatEmail: yup
-      .string()
-      .required('Repeat email is required')
-      .oneOf([yup.ref('email')], 'Email mismatches'),
     password: yup
       .string()
       .required('Password is required')
@@ -35,7 +30,7 @@ const SignUpForm: React.FC = () => {
       .matches(regexForAtLeastOneUppercaseLetter, 'Password must contain at least one uppercase letter')
       .matches(regexForAtLeastOneDigit, 'Password must contain at least one digit')
       .matches(regexForAtLeastOneSpecialCharacter, 'Password must contain at least one special character'),
-    repeatPassword: yup
+    confirmPassword: yup
       .string()
       .required('Repeat password is required')
       .oneOf([yup.ref('password')], 'Password mismatches'),
@@ -73,18 +68,6 @@ const SignUpForm: React.FC = () => {
         {...register('email')}
       />
       <TextField
-        id='repeatEmail'
-        label='Repeat email'
-        type='email'
-        margin='normal'
-        autoComplete='username'
-        error={!!errors.repeatEmail}
-        helperText={errors.repeatEmail?.message}
-        fullWidth
-        required
-        {...register('repeatEmail')}
-      />
-      <TextField
         id='password'
         label='Password'
         type='password'
@@ -97,16 +80,16 @@ const SignUpForm: React.FC = () => {
         {...register('password')}
       />
       <TextField
-        id='repeatPassword'
+        id='confirmPassword'
         label='Repeat password'
         type='password'
         margin='normal'
         autoComplete='confirm-password'
-        error={!!errors.repeatPassword}
-        helperText={errors.repeatPassword?.message}
+        error={!!errors.confirmPassword}
+        helperText={errors.confirmPassword?.message}
         fullWidth
         required
-        {...register('repeatPassword')}
+        {...register('confirmPassword')}
       />
     </Form>
   )
