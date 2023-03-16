@@ -14,11 +14,13 @@ const options = {
 }
 zxcvbnOptions.setOptions(options)
 
-const usePasswordStrength = (password: string) => {
+const usePasswordStrength = (password: string): ZxcvbnResult | null => {
   const [result, setResult] = useState<ZxcvbnResult | null>(null)
   const deferredPassword = useDeferredValue(password)
 
   useEffect(() => {
+    if (!deferredPassword) return
+
     zxcvbnAsync(deferredPassword).then((response) => setResult(response))
   }, [deferredPassword])
 
