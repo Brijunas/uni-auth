@@ -3,7 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
+import PasswordStrenghtProgress from './PasswordStrenghtProgress'
 
 const regexForAtLeastOneLowercaseLetter = /^(?=.*[a-z])/
 const regexForAtLeastOneUppercaseLetter = /^(?=.*[A-Z])/
@@ -40,17 +42,21 @@ const SignUpForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<SignUpFormData>({ resolver: yupResolver(schema), mode: 'onBlur' })
 
-  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-    console.log(data)
-  }
+  const password = watch('password')
+  const result = usePasswordStrength(password)
 
   useEffect(() => {
     if (emailRef.current) {
       emailRef.current.focus()
     }
   }, [])
+
+  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
+    console.log(data)
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
@@ -79,6 +85,7 @@ const SignUpForm: React.FC = () => {
         required
         {...register('password')}
       />
+      <PasswordStrenghtProgress score={result?.score} />
       <TextField
         id='confirmPassword'
         label='Repeat password'
