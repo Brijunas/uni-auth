@@ -3,11 +3,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import bannedWords from '../auth/banned-words'
 import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
 import PasswordStrengthProgress from './PasswordStrengthProgress'
-
-const bannedWords = ['root', 'admin', 'abuse', 'webmaster', 'spam', 'help', 'username', 'password', 'pass']
 
 interface SignUpFormData {
   username: string
