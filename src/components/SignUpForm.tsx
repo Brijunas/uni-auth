@@ -7,6 +7,8 @@ import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
 import PasswordStrengthProgress from './PasswordStrengthProgress'
 
+const bannedWords = ['root', 'admin', 'abuse', 'webmaster', 'spam', 'help', 'username', 'password', 'pass']
+
 interface SignUpFormData {
   username: string
   password: string
@@ -18,7 +20,23 @@ const SignUpForm: React.FC = () => {
   const [isStrongPassword, setIsStrongPassword] = useState<boolean | undefined>(undefined)
 
   const schema = yup.object({
-    username: yup.string().required('Username is required'),
+    username: yup
+      .string()
+      .required('Username is required')
+      .min(2, 'Username must be at least 2 characters long.')
+      .max(20, 'Username cannot be longer than 20 characters.')
+      .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) => {
+        if (value && (value.startsWith(' ') || value.endsWith(' '))) {
+          return false
+        }
+        return true
+      })
+      .matches(
+        /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*$/,
+        'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number.'
+      )
+      .notOneOf(bannedWords, 'Username cannot contain banned words.')
+      .strict(true),
     password: yup
       .string()
       .required('Password is required')
