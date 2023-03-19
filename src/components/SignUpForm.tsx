@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import bannedWords from '../auth/banned-words'
+import bannedUsernames from '../auth/banned-usernames'
 import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
 import PasswordStrengthProgress from './PasswordStrengthProgress'
@@ -34,7 +34,7 @@ const SignUpForm: React.FC = () => {
         /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*$/,
         'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number.'
       )
-      .notOneOf(bannedWords, 'Username cannot contain banned words.')
+      .notOneOf(bannedUsernames, 'Username cannot contain banned words.')
       .strict(true),
     password: yup
       .string()

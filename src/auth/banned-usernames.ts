@@ -1,4 +1,4 @@
-const bannedWords = [
+const bannedUsernames: string[] = [
   'abuse',
   'admin',
   'api',
@@ -14,4 +14,4 @@ const bannedWords = [
   'webmaster',
 ]
 
-export default bannedWords
+export default bannedUsernames
