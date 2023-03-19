@@ -6,15 +6,15 @@ import * as yup from 'yup'
 import Form from '../shared/Form'
 
 interface LogInFormData {
-  email: string
+  username: string
   password: string
 }
 
 const LoginForm: React.FC = () => {
-  const emailRef = useRef<HTMLInputElement>(null)
+  const usernameInputRef = useRef<HTMLInputElement>(null)
 
   const schema = yup.object({
-    email: yup.string().required('Email is required').email('Enter a valid email'),
+    username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required'),
   })
 
@@ -29,24 +29,24 @@ const LoginForm: React.FC = () => {
   }
 
   useEffect(() => {
-    if (emailRef.current) {
-      emailRef.current.focus()
+    if (usernameInputRef.current) {
+      usernameInputRef.current.focus()
     }
   }, [])
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Log in'>
       <TextField
-        id='email'
-        label='Email'
-        type='email'
+        id='username'
+        label='Username'
+        type='text'
         margin='normal'
         autoComplete='username'
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        error={!!errors.username}
+        helperText={errors.username?.message}
         fullWidth
-        inputRef={emailRef}
-        {...register('email')}
+        inputRef={usernameInputRef}
+        {...register('username')}
       />
       <TextField
         id='password'

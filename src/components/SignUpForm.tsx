@@ -8,17 +8,17 @@ import Form from '../shared/Form'
 import PasswordStrengthProgress from './PasswordStrengthProgress'
 
 interface SignUpFormData {
-  email: string
+  username: string
   password: string
   confirmPassword: string
 }
 
 const SignUpForm: React.FC = () => {
-  const emailRef = useRef<HTMLInputElement>(null)
+  const usernameInputRef = useRef<HTMLInputElement>(null)
   const [isStrongPassword, setIsStrongPassword] = useState<boolean | undefined>(undefined)
 
   const schema = yup.object({
-    email: yup.string().required('Email is required').email('Enter a valid email'),
+    username: yup.string().required('Email is required'),
     password: yup
       .string()
       .required('Password is required')
@@ -40,8 +40,8 @@ const SignUpForm: React.FC = () => {
   const result = usePasswordStrength(password)
 
   useEffect(() => {
-    if (emailRef.current) {
-      emailRef.current.focus()
+    if (usernameInputRef.current) {
+      usernameInputRef.current.focus()
     }
   }, [])
 
@@ -60,17 +60,17 @@ const SignUpForm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
       <TextField
-        id='email'
-        label='Email'
-        type='email'
+        id='username'
+        label='Username'
+        type='text'
         margin='normal'
         autoComplete='username'
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        error={!!errors.username}
+        helperText={errors.username?.message}
         fullWidth
         required
-        inputRef={emailRef}
-        {...register('email')}
+        inputRef={usernameInputRef}
+        {...register('username')}
       />
       <TextField
         id='password'
