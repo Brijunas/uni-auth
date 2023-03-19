@@ -1,14 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
-
-const regexForAtLeastOneLowercaseLetter = /^(?=.*[a-z])/
-const regexForAtLeastOneUppercaseLetter = /^(?=.*[A-Z])/
-const regexForAtLeastOneDigit = /^(?=.*\d)/
-const regexForAtLeastOneSpecialCharacter = /^(?=.*[!@#$%^&*()_+\-={}|[\]\\:";'<>?,./~])/
+import PasswordStrenghtProgress from './PasswordStrenghtProgress'
 
 interface SignUpFormData {
   email: string
@@ -18,18 +15,14 @@ interface SignUpFormData {
 
 const SignUpForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null)
+  const [isStrongPassword, setIsStrongPassword] = useState<boolean | undefined>(undefined)
 
   const schema = yup.object({
     email: yup.string().required('Email is required').email('Enter a valid email'),
     password: yup
       .string()
       .required('Password is required')
-      .min(12, 'Password must be at least 12 characters')
-      .max(50, 'Password must be at most 50 characters')
-      .matches(regexForAtLeastOneLowercaseLetter, 'Password must contain at least one lowercase letter')
-      .matches(regexForAtLeastOneUppercaseLetter, 'Password must contain at least one uppercase letter')
-      .matches(regexForAtLeastOneDigit, 'Password must contain at least one digit')
-      .matches(regexForAtLeastOneSpecialCharacter, 'Password must contain at least one special character'),
+      .test('is-strong-password', 'Password is too weak', () => isStrongPassword),
     confirmPassword: yup
       .string()
       .required('Repeat password is required')
@@ -40,17 +33,29 @@ const SignUpForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<SignUpFormData>({ resolver: yupResolver(schema), mode: 'onBlur' })
 
-  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-    console.log(data)
-  }
+  const password = watch('password')
+  const result = usePasswordStrength(password)
 
   useEffect(() => {
     if (emailRef.current) {
       emailRef.current.focus()
     }
   }, [])
+
+  useEffect(() => {
+    if (result && result.score !== 4) {
+      setIsStrongPassword(false)
+    } else {
+      setIsStrongPassword(true)
+    }
+  }, [result])
+
+  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
+    console.log(data)
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
@@ -79,6 +84,7 @@ const SignUpForm: React.FC = () => {
         required
         {...register('password')}
       />
+      <PasswordStrenghtProgress score={result?.score} />
       <TextField
         id='confirmPassword'
         label='Repeat password'

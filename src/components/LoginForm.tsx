@@ -5,8 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Form from '../shared/Form'
 
-const regexForValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-={}|[\]\\:";'<>?,./~])\S{12,50}$/
-
 interface LogInFormData {
   email: string
   password: string
@@ -17,7 +15,7 @@ const LoginForm: React.FC = () => {
 
   const schema = yup.object({
     email: yup.string().required('Email is required').email('Enter a valid email'),
-    password: yup.string().required('Password is required').matches(regexForValidPassword, 'Enter a valid password'),
+    password: yup.string().required('Password is required'),
   })
 
   const {
