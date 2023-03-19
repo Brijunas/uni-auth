@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
-import PasswordStrenghtProgress from './PasswordStrenghtProgress'
+import PasswordStrengthProgress from './PasswordStrengthProgress'
 
 interface SignUpFormData {
   email: string
@@ -84,7 +84,7 @@ const SignUpForm: React.FC = () => {
         required
         {...register('password')}
       />
-      <PasswordStrenghtProgress score={result?.score} />
+      <PasswordStrengthProgress score={result?.score} />
       <TextField
         id='confirmPassword'
         label='Repeat password'

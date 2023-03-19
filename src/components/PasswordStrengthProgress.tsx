@@ -18,12 +18,12 @@ const getColor = (score: Score | undefined): 'error' | 'warning' | 'info' | 'suc
   }
 }
 
-interface PasswordStrenghtProgress {
+interface PasswordStrengthProgress {
   score: Score | undefined
 }
 
-const PasswordStrenghtProgress: React.FC<PasswordStrenghtProgress> = ({ score }) => (
+const PasswordStrengthProgress: React.FC<PasswordStrengthProgress> = ({ score }) => (
   <LinearProgress variant='determinate' value={(score ?? 0) * 25} color={getColor(score)} />
 )
 
-export default PasswordStrenghtProgress
+export default PasswordStrengthProgress
