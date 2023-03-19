@@ -22,8 +22,8 @@ const SignUpForm: React.FC = () => {
     username: yup
       .string()
       .required('Username is required')
-      .min(2, 'Username must be at least 2 characters long.')
-      .max(20, 'Username cannot be longer than 20 characters.')
+      .min(2, 'Username must be at least 2 characters long')
+      .max(20, 'Username cannot be longer than 20 characters')
       .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) => {
         if (value && (value.startsWith(' ') || value.endsWith(' '))) {
           return false
@@ -32,9 +32,9 @@ const SignUpForm: React.FC = () => {
       })
       .matches(
         /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*$/,
-        'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number.'
+        'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number'
       )
-      .notOneOf(bannedUsernames, 'Username cannot contain banned words.')
+      .notOneOf(bannedUsernames, 'This username is taken')
       .strict(true),
     password: yup
       .string()
