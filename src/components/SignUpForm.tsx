@@ -3,22 +3,39 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import bannedUsernames from '../auth/banned-usernames'
 import usePasswordStrength from '../hooks/use-password-strength'
 import Form from '../shared/Form'
 import PasswordStrengthProgress from './PasswordStrengthProgress'
 
 interface SignUpFormData {
-  email: string
+  username: string
   password: string
   confirmPassword: string
 }
 
 const SignUpForm: React.FC = () => {
-  const emailRef = useRef<HTMLInputElement>(null)
+  const usernameInputRef = useRef<HTMLInputElement>(null)
   const [isStrongPassword, setIsStrongPassword] = useState<boolean | undefined>(undefined)
 
   const schema = yup.object({
-    email: yup.string().required('Email is required').email('Enter a valid email'),
+    username: yup
+      .string()
+      .required('Username is required')
+      .min(2, 'Username must be at least 2 characters long')
+      .max(20, 'Username cannot be longer than 20 characters')
+      .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) => {
+        if (value && (value.startsWith(' ') || value.endsWith(' '))) {
+          return false
+        }
+        return true
+      })
+      .matches(
+        /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*$/,
+        'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number'
+      )
+      .notOneOf(bannedUsernames, 'This username is taken')
+      .strict(true),
     password: yup
       .string()
       .required('Password is required')
@@ -40,8 +57,8 @@ const SignUpForm: React.FC = () => {
   const result = usePasswordStrength(password)
 
   useEffect(() => {
-    if (emailRef.current) {
-      emailRef.current.focus()
+    if (usernameInputRef.current) {
+      usernameInputRef.current.focus()
     }
   }, [])
 
@@ -60,17 +77,17 @@ const SignUpForm: React.FC = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
       <TextField
-        id='email'
-        label='Email'
-        type='email'
+        id='username'
+        label='Username'
+        type='text'
         margin='normal'
         autoComplete='username'
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        error={!!errors.username}
+        helperText={errors.username?.message}
         fullWidth
         required
-        inputRef={emailRef}
-        {...register('email')}
+        inputRef={usernameInputRef}
+        {...register('username')}
       />
       <TextField
         id='password'
