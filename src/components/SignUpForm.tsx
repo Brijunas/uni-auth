@@ -24,12 +24,9 @@ const SignUpForm: React.FC = () => {
       .required('Username is required')
       .min(2, 'Username must be at least 2 characters long')
       .max(20, 'Username cannot be longer than 20 characters')
-      .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) => {
-        if (value && (value.startsWith(' ') || value.endsWith(' '))) {
-          return false
-        }
-        return true
-      })
+      .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) =>
+        value && (value.startsWith(' ') || value.endsWith(' ')) ? false : true
+      )
       .matches(
         /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*$/,
         'Username can only contain letters, numbers, and the characters _, -, and ., which must be separated by at least one letter or number'
