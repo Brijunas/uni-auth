@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Layout, Login, NotFound, SignUp } from './pages'
-import URL from './pages'
+import URL, { Layout, Login, NotFound, SignUp } from './pages'
 
 const AppRoutes: React.FC = () => (
   <BrowserRouter>

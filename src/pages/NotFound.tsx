@@ -2,8 +2,12 @@ import { Typography } from '@mui/material'
 
 const NotFound: React.FC = () => (
   <>
-    <Typography variant='h2'>Page not found</Typography>
-    <Typography variant='h1'>404</Typography>
+    <Typography variant='h2' align='center'>
+      Page not found
+    </Typography>
+    <Typography variant='h1' align='center'>
+      404
+    </Typography>
   </>
 )
 
