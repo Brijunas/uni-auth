@@ -1,6 +1,6 @@
+import React from 'react'
 import { LinearProgress } from '@mui/material'
 import { Score } from '@zxcvbn-ts/core/dist/types'
-import React from 'react'
 
 const getColor = (score: Score | undefined): 'error' | 'warning' | 'info' | 'success' | 'primary' => {
   switch (score) {

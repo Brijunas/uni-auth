@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { Provider } from 'react-redux'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, useMediaQuery } from '@mui/material'
-import { store } from './app/store'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AppRoutes from './AppRoutes'
+import { store } from './app/store'
 
 const App: React.FC = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')

@@ -6,9 +6,11 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
     "prettier"
   ],
   "overrides": [],
@@ -24,11 +26,40 @@
       {
         "patterns": ["@mui/*/*/*"]
       }
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "orderImportKind": "asc"
+        },
+        "newlines-between": "never",
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "react-*",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "@mui/**",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "react-*", "@mui/**"]
+      }
     ]
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": true,
+      "node": true
     },
     "react": {
       "version": "detect"
