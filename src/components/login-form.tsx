@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import Form from '../shared/Form'
+import Form from '../shared/form'
 
 interface LogInFormData {
   username: string

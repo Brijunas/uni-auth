@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container } from '@mui/material'
-import StyledButton from './StyledButton'
+import StyledButton from './styled-button'
 
 interface Form {
   children: React.ReactNode

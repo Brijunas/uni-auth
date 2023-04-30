@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Container } from '@mui/material'
-import SignUpForm from '../components/SignUpForm'
-import URL from '../pages'
-import StyledButton from '../shared/StyledButton'
+import SignUpForm from '../components/sign-up-form'
+import StyledButton from '../shared/styled-button'
+import URL from './urls'
 
 const SignUp: React.FC = () => (
   <>

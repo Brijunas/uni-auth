@@ -5,8 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import bannedUsernames from '../auth/banned-usernames'
 import usePasswordStrength from '../hooks/use-password-strength'
-import Form from '../shared/Form'
-import PasswordStrengthProgress from './PasswordStrengthProgress'
+import Form from '../shared/form'
+import PasswordStrengthProgress from './password-strength-progress'
 
 interface SignUpFormData {
   username: string

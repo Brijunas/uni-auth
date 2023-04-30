@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Container, Divider, Typography } from '@mui/material'
-import LoginForm from '../components/LoginForm'
-import URL from '../pages'
-import StyledButton from '../shared/StyledButton'
+import LoginForm from '../components/login-form'
+import StyledButton from '../shared/styled-button'
+import URL from './urls'
 
 const Login: React.FC = () => (
   <>
