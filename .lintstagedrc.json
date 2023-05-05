@@ -1,4 +1,4 @@
 {
   "*.{ts?(x),js?(x)}": ["eslint --fix", "prettier --write"],
-  "!(*.ts?(x)|*.js?(x))": ["prettier --write"]
+  "!(*.ts?(x)|*.js?(x))": ["prettier --ignore-unknown --write"]
 }
