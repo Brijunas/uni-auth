@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
   }, [])
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Log in'>
+    <Form onSubmit={(event) => void handleSubmit(onSubmit)(event)} submitBtnTitle='Log in'>
       <TextField
         id='username'
         label='Username'

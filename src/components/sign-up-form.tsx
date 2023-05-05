@@ -72,7 +72,11 @@ const SignUpForm: React.FC = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} submitBtnTitle='Sign up' submitBtnDisabled={!isValid}>
+    <Form
+      onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+      submitBtnTitle='Sign up'
+      submitBtnDisabled={!isValid}
+    >
       <TextField
         id='username'
         label='Username'

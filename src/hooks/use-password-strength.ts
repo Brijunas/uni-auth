@@ -21,7 +21,9 @@ const usePasswordStrength = (password: string): ZxcvbnResult | null => {
   useEffect(() => {
     if (!deferredPassword) return
 
-    zxcvbnAsync(deferredPassword).then((response) => setResult(response))
+    zxcvbnAsync(deferredPassword)
+      .then((response) => setResult(response))
+      .catch((error) => console.error(error))
   }, [deferredPassword])
 
   return result
