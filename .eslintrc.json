@@ -2,13 +2,14 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "jest": true
+    "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
@@ -22,8 +23,19 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
+    "react/prop-types": "off",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "arguments": false,
+          "attributes": false
+        }
+      }
+    ],
+    "import/no-unresolved": "error",
     "no-restricted-imports": [
       "error",
       {
@@ -50,18 +62,28 @@
             "position": "before"
           },
           {
+            "pattern": "react-*/**",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
             "pattern": "@mui/**",
             "group": "builtin",
             "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react", "react-*", "@mui/**"]
+        "pathGroupsExcludedImportTypes": ["react", "react-*", "react-*/**", "@mui/**"]
       }
     ]
   },
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
-      "typescript": true,
+      "typescript": {
+        "alwaysTryTypes": true
+      },
       "node": true
     },
     "react": {
