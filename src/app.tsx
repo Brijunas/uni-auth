@@ -21,7 +21,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
+        <CssBaseline enableColorScheme />
         <AppRoutes />
       </ThemeProvider>
     </Provider>
