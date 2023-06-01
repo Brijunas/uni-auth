@@ -21,7 +21,7 @@ const SignUpForm: React.FC = () => {
     username: yup
       .string()
       .required('Username is required')
-      .min(2, 'Username must be at least 2 characters long')
+      .min(3, 'Username must be at least 3 characters long')
       .max(20, 'Username cannot be longer than 20 characters')
       .test('no-leading-trailing-whitespace', 'Username cannot start or end with whitespace', (value) =>
         value && (value.startsWith(' ') || value.endsWith(' ')) ? false : true
@@ -34,11 +34,19 @@ const SignUpForm: React.FC = () => {
     password: yup
       .string()
       .required('Password is required')
-      .test('is-strong-password', 'Password is too weak', () => isStrongPassword),
+      .min(14, 'Password must be at least 14 characters long')
+      .max(56, 'Password cannot be longer than 56 characters')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/\d/, 'Password must contain at least one digit')
+      .matches(/\W/, 'Password must contain at least one non-alphanumeric character')
+      .test('is-strong-password', 'Password is too weak', () => isStrongPassword)
+      .strict(true),
     confirmPassword: yup
       .string()
       .required('Repeat password is required')
-      .oneOf([yup.ref('password')], 'Password mismatches'),
+      .oneOf([yup.ref('password')], 'Password mismatches')
+      .strict(true),
   })
 
   const {
