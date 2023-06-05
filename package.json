@@ -12,13 +12,13 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@zxcvbn-ts/core": "^3.0.1",
     "@zxcvbn-ts/language-common": "^3.0.2",
-    "@zxcvbn-ts/language-en": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
+    "source-map-explorer": "^2.5.3",
     "typescript": "^5.1.0",
     "yup": "^1.2.0"
   },
@@ -40,6 +40,7 @@
     "prettier": "2.8.8"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
