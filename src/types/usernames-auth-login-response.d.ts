@@ -1,0 +1,3 @@
+interface UsernamesAuthLoginResponse {
+  token: string
+}

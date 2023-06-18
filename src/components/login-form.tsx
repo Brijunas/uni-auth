@@ -1,17 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextField } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { skipToken } from '@reduxjs/toolkit/dist/query/react'
 import * as yup from 'yup'
 import Form from '../shared/form'
-
-interface LogInFormData {
-  username: string
-  password: string
-}
+import { useUsernameAuthLoginQuery } from '../store/backend-api'
+import { UsernamesAuthLoginRequest } from '../types'
 
 const LoginForm: React.FC = () => {
   const usernameInputRef = useRef<HTMLInputElement>(null)
+  const [credentials, setCredentials] = useState<UsernamesAuthLoginRequest | undefined>(undefined)
+  useUsernameAuthLoginQuery(credentials ?? skipToken)
 
   const schema = yup.object({
     username: yup.string().required('Username is required'),
@@ -22,10 +22,10 @@ const LoginForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LogInFormData>({ resolver: yupResolver(schema), mode: 'onSubmit' })
+  } = useForm<UsernamesAuthLoginRequest>({ resolver: yupResolver(schema), mode: 'onSubmit' })
 
-  const onSubmit: SubmitHandler<LogInFormData> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<UsernamesAuthLoginRequest> = (data) => {
+    setCredentials(data)
   }
 
   useEffect(() => {
